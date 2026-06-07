@@ -42,14 +42,18 @@ import cooksense.composeapp.generated.resources.Res
 import cooksense.composeapp.generated.resources.compose_multiplatform
 import org.chef.cooksense.auth.AuthViewModel
 import org.chef.cooksense.auth.LoginScreen
+import org.chef.cooksense.auth.SignUpScreen
 
 @Composable
 fun App() {
-    LoginScreen(
-        AuthViewModel(),
-        {}, //TODO
-        {}, //TODO
-    )
+    CooksenseTheme(lightTheme = true) {
+        LoginScreen(
+            AuthViewModel(),
+            {}, //TODO
+            {}, //TODO
+        )
+//        SignUpScreen()
+    }
 
 
 //    CooksenseTheme {
