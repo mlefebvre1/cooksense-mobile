@@ -46,7 +46,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.text.font.FontWeight
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cooksense.composeapp.generated.resources.Res
 import cooksense.composeapp.generated.resources.ic_launcher
 
@@ -56,7 +58,7 @@ fun LoginScreen(
     onLoginSuccess: () -> Unit,
     onNavigateToSignUp: () -> Unit,
 ) {
-//    var uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     // State variable to store the email address
     var email by remember { mutableStateOf("") }
@@ -67,6 +69,9 @@ fun LoginScreen(
     // State variable to show/hide the password
     var passwordVisible by remember { mutableStateOf(false) }
 
+    LaunchedEffect(uiState.isSuccess) {
+        if (uiState.isSuccess) onLoginSuccess()
+    }
 
     Column(
         modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
@@ -150,25 +155,34 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.size(20.dp))
 
-        //TODO: uiState.erroMessage
+        // Print error message if a login erro occured
+        uiState.errorMessage?.let {
+            Text(
+                text = it,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall
+            )
+            Spacer(Modifier.height(8.dp))
+        }
+
 
         Button(
-            onClick = {},
-//            enabled = !uiState.isLoading,
-            enabled = true,
+            onClick = {
+                viewModel.signIn(email, password)
+            },
+            enabled = !uiState.isLoading,
             modifier = Modifier.fillMaxWidth().height(48.dp),
             shape = RoundedCornerShape(8.dp),
         ) {
-//            if (uiState.isLoading) {
-//                CircularProgressIndicator(
-//                    modifier = Modifier.size(18.dp),
-//                    strokeWidth = 2.dp,
-//                    color = MaterialTheme.colorScheme.onPrimary,
-//                )
-//            } else {
-//                Text("Sign In", fontWeight = FontWeight.Medium)
-//            }
-            Text("Sign In", fontWeight = FontWeight.Medium)
+            if (uiState.isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(18.dp),
+                    strokeWidth = 2.dp,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                )
+            } else {
+                Text("Sign In", fontWeight = FontWeight.Medium)
+            }
         }
 
         Spacer(modifier = Modifier.size(16.dp))
@@ -190,11 +204,11 @@ fun LoginScreen(
 
 
         OutlinedButton(
-            onClick = { },//TODO },
+            onClick = {/*TODO: Google sign in*/ },
             modifier = Modifier.fillMaxWidth().height(48.dp),
             shape = RoundedCornerShape(8.dp)
         ) {
-            //TODO: replace with google icon
+            //TODO: replace with Google icon
             Icon(
                 Icons.Default.AccountCircle,
                 contentDescription = null

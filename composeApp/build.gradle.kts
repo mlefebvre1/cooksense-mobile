@@ -42,6 +42,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation("com.stevdza-san:swipeable-kmp:1.0.6")
             implementation("org.jetbrains.compose.material:material-icons-extended:1.7.3")
+            implementation("dev.gitlive:firebase-auth:2.4.0")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
