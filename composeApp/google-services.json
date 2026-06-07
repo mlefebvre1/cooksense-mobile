@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "945382780386",
+    "project_id": "cooksense-14276",
+    "storage_bucket": "cooksense-14276.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945382780386:android:1cd4d1be0103990a115dbb",
+        "android_client_info": {
+          "package_name": "org.chef.cooksense"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "945382780386-pd8a74kdki596fo2cs33jk8nh5nh9cmc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAundNV_LT9n9uNjnd1_C1e45il86L9RNs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "945382780386-pd8a74kdki596fo2cs33jk8nh5nh9cmc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

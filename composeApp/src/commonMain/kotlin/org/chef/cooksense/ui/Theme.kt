@@ -7,12 +7,12 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun CooksenseTheme(
-    lightTheme: Boolean = true,
+    lightTheme: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colors = if (lightTheme) {
         lightColorScheme(
-            primary = androidx.compose.ui.graphics.Color(0xFF6200EE),
+            primary = androidx.compose.ui.graphics.Color(0xFFA32D2D),
             secondary = androidx.compose.ui.graphics.Color(0xFF03DAC6),
             background = androidx.compose.ui.graphics.Color(0xFFFFFBFE),
             surface = androidx.compose.ui.graphics.Color(0xFFFFFBFE),

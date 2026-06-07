@@ -40,31 +40,40 @@ import org.chef.cooksense.mvi.RecipeViewModel
 import org.chef.cooksense.ui.CooksenseTheme
 import cooksense.composeapp.generated.resources.Res
 import cooksense.composeapp.generated.resources.compose_multiplatform
+import org.chef.cooksense.auth.AuthViewModel
+import org.chef.cooksense.auth.LoginScreen
 
 @Composable
 fun App() {
-    CooksenseTheme {
-        val viewModel = remember { RecipeViewModel() }
-        val viewState by viewModel.viewState
+    LoginScreen(
+        AuthViewModel(),
+        {}, //TODO
+        {}, //TODO
+    )
 
-        LaunchedEffect(Unit) {
-            viewModel.onIntent(Intent.Initialize)
-        }
 
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-        ) {
-            if (viewState.showingEmpty) {
-                Text("No more recipes!", fontSize = 24.sp)
-            } else {
-                viewState.currentRecipe?.let { recipe ->
-                    RecipeCard(recipe, viewModel)
-                }
-            }
-        }
-    }
+//    CooksenseTheme {
+//        val viewModel = remember { RecipeViewModel() }
+//        val viewState by viewModel.viewState
+//
+//        LaunchedEffect(Unit) {
+//            viewModel.onIntent(Intent.Initialize)
+//        }
+//
+//        Column(
+//            modifier = Modifier.fillMaxSize(),
+//            horizontalAlignment = Alignment.CenterHorizontally,
+//            verticalArrangement = Arrangement.Center,
+//        ) {
+//            if (viewState.showingEmpty) {
+//                Text("No more recipes!", fontSize = 24.sp)
+//            } else {
+//                viewState.currentRecipe?.let { recipe ->
+//                    RecipeCard(recipe, viewModel)
+//                }
+//            }
+//        }
+//    }
 }
 
 @Composable
