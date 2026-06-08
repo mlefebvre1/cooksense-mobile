@@ -43,6 +43,7 @@ kotlin {
             implementation("com.stevdza-san:swipeable-kmp:1.0.6")
             implementation("org.jetbrains.compose.material:material-icons-extended:1.7.3")
             implementation("dev.gitlive:firebase-auth:2.4.0")
+            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.2")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -82,10 +83,9 @@ dependencies {
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:34.14.0"))
 
-    // TODO: Add the dependencies for Firebase products you want to use
-    // When using the BoM, don't specify versions in Firebase dependencies
-    implementation("com.google.firebase:firebase-analytics")
+//    implementation("com.google.firebase:firebase-analytics")
 
+    // Firebase authentification
     implementation("dev.gitlive:firebase-auth:2.4.0")
 
 

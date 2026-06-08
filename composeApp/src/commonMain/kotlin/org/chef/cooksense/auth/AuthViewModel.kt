@@ -27,6 +27,23 @@ class AuthViewModel : ViewModel() {
                 _uiState.value = AuthUiState(errorMessage = e.message)
             }
         }
+    }
 
+    fun signUp(email: String, password: String, confirmPassword: String) {
+        if (password != confirmPassword) {
+            _uiState.value = AuthUiState(errorMessage = "Passwords do not match")
+        }
+        if (password.length < 8) {
+            _uiState.value = AuthUiState(errorMessage = "Passwords must be at least 8 characters")
+        }
+        viewModelScope.launch {
+            _uiState.value = AuthUiState(isLoading = true)
+            try {
+                repository.signUp(email, password)
+                _uiState.value = AuthUiState(isSuccess = true)
+            } catch (e: Exception) {
+                _uiState.value = AuthUiState(errorMessage = e.message)
+            }
+        }
     }
 }

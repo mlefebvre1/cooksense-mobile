@@ -37,6 +37,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,9 +46,17 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(
+    viewModel: AuthViewModel,
+    onSignUpSuccess: () -> Unit,
+    onNavigateToLogin: () -> Unit,
+) {
+    // This is used to check what is the state of the Auth model
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
     // State variable to store the email address
     var email by remember { mutableStateOf("") }
 
@@ -56,10 +65,16 @@ fun SignUpScreen() {
     // State variable to show/hide the password
     var passwordVisible by remember { mutableStateOf(false) }
 
+    // State variable to store the confirmed password
     var confirmPassword by remember { mutableStateOf("") }
     // State variable to show/hide the password
     var confirmPasswordVisible by remember { mutableStateOf(false) }
 
+    val passwordMatch = password == confirmPassword
+
+    LaunchedEffect(uiState.isSuccess) {
+        if (uiState.isSuccess) onSignUpSuccess()
+    }
 
     Column(
         modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
@@ -162,10 +177,20 @@ fun SignUpScreen() {
 
         Spacer(modifier = Modifier.size(24.dp))
 
+        uiState.errorMessage?.let {
+            Text(
+                text = it,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall
+            )
+            Spacer(Modifier.height(8.dp))
+        }
+
         Button(
             onClick = {
-                //TODO:
+                viewModel.signUp(email, password, confirmPassword)
             },
+            enabled = !uiState.isLoading && passwordMatch,
             modifier = Modifier.fillMaxWidth().height(48.dp),
             shape = RoundedCornerShape(8.dp),
         ) {
@@ -216,7 +241,7 @@ fun SignUpScreen() {
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier.clickable {
-                    //TODO
+                    onNavigateToLogin()
                 },
             )
         }
