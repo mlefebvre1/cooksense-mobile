@@ -1,8 +1,13 @@
 package org.chef.cooksense
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import org.chef.cooksense.auth.AuthViewModel
 import org.chef.cooksense.auth.LoginScreen
@@ -21,44 +26,85 @@ sealed class Screen(val route: String) {
 fun AppNavigation() {
     val navController = rememberNavController()
 
-    NavHost(
-        navController = navController,
-        startDestination = Screen.Login.route,
-    ) {
-        composable(Screen.Login.route) {
-            val viewModel = AuthViewModel()
-            LoginScreen(
-                viewModel = viewModel,
-                onLoginSuccess = {
-                    navController.navigate(Screen.Discover.route) {
-                        popUpTo(Screen.Login.route) { inclusive = true }
-                    }
-                },
-                onNavigateToSignUp = {
-                    navController.navigate(Screen.SignUp.route)
-                },
-            )
-        }
+    // screens that should show the bottom nav
+    val bottomNavRoutes = listOf(
+        BottomNavScreen.Discover.route,
+        BottomNavScreen.Favourites.route,
+        BottomNavScreen.Profile.route
+    )
 
-        composable(Screen.SignUp.route) {
-            val viewModel = AuthViewModel()
-            SignUpScreen(
-                viewModel = viewModel,
-                onSignUpSuccess = {
-                    navController.navigate(Screen.Discover.route) {
-                        popUpTo(Screen.Login.route) { inclusive = true }
+    Scaffold(
+        bottomBar = {
+            val currentBackStack by navController.currentBackStackEntryAsState()
+            val currentRoute = currentBackStack?.destination?.route
+            println("Current route: $currentRoute")
+
+            if (currentRoute in bottomNavRoutes) {
+                BottomNavigationBar(
+                    currentRoute = currentRoute ?: BottomNavScreen.Discover.route,
+                    onNavigate = { route ->
+                        navController.navigate(route) {
+                            // avoid building up a large back stack
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }
-                },
-                onNavigateToLogin = {
-                    navController.navigate(Screen.Login.route)
-                },
-            )
+                )
+            }
         }
-        composable(Screen.Discover.route) {
-            val viewModel = DiscoverViewModel()
-            DiscoverScreen(
-                viewModel = viewModel
-            )
+    ) { paddingValues ->
+        NavHost(
+            navController = navController,
+            startDestination = Screen.Login.route,
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            composable(Screen.Login.route) {
+                val viewModel = AuthViewModel()
+                LoginScreen(
+                    viewModel = viewModel,
+                    onLoginSuccess = {
+                        navController.navigate(Screen.Discover.route) {
+                            popUpTo(Screen.Login.route) { inclusive = true }
+                        }
+                    },
+                    onNavigateToSignUp = {
+                        navController.navigate(Screen.SignUp.route)
+                    },
+                )
+            }
+
+            composable(Screen.SignUp.route) {
+                val viewModel = AuthViewModel()
+                SignUpScreen(
+                    viewModel = viewModel,
+                    onSignUpSuccess = {
+                        navController.navigate(Screen.Discover.route) {
+                            popUpTo(Screen.Login.route) { inclusive = true }
+                        }
+                    },
+                    onNavigateToLogin = {
+                        navController.navigate(Screen.Login.route)
+                    },
+                )
+            }
+            composable(Screen.Discover.route) {
+                val viewModel = DiscoverViewModel()
+                DiscoverScreen(
+                    viewModel = viewModel
+                )
+            }
+            composable(BottomNavScreen.Favourites.route) {
+                //TODO:
+//                FavouritesScreen()
+            }
+
+            composable(BottomNavScreen.Profile.route) {
+                //TODO:
+//                ProfileScreen()
+            }
         }
     }
 }
