@@ -14,6 +14,7 @@ import org.chef.cooksense.auth.LoginScreen
 import org.chef.cooksense.auth.SignUpScreen
 import org.chef.cooksense.discover.DiscoverScreen
 import org.chef.cooksense.discover.DiscoverViewModel
+import org.chef.cooksense.favorite.FavoriteScreen
 
 
 sealed class Screen(val route: String) {
@@ -61,6 +62,8 @@ fun AppNavigation() {
             startDestination = Screen.Login.route,
             modifier = Modifier.padding(paddingValues)
         ) {
+            val discoverViewModel = DiscoverViewModel()
+
             composable(Screen.Login.route) {
                 val viewModel = AuthViewModel()
                 LoginScreen(
@@ -91,14 +94,12 @@ fun AppNavigation() {
                 )
             }
             composable(Screen.Discover.route) {
-                val viewModel = DiscoverViewModel()
                 DiscoverScreen(
-                    viewModel = viewModel
+                    viewModel = discoverViewModel
                 )
             }
             composable(BottomNavScreen.Favourites.route) {
-                //TODO:
-//                FavouritesScreen()
+                FavoriteScreen(discoverViewModel)
             }
 
             composable(BottomNavScreen.Profile.route) {

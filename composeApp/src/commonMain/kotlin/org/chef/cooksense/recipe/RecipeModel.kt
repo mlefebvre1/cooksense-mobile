@@ -1,4 +1,4 @@
-package org.chef.cooksense.discover
+package org.chef.cooksense.recipe
 
 import androidx.compose.ui.graphics.painter.Painter
 

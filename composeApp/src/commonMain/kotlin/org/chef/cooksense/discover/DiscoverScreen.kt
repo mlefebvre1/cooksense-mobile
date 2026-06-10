@@ -41,6 +41,7 @@ import com.stevdza_san.swipeable.domain.SwipeBehavior
 import cooksense.composeapp.generated.resources.Res
 import cooksense.composeapp.generated.resources.ic_close
 import cooksense.composeapp.generated.resources.ic_heart
+import org.chef.cooksense.recipe.RecipeCard
 
 @Composable
 fun DiscoverScreen(
@@ -48,6 +49,7 @@ fun DiscoverScreen(
     //TODO: add callbacks
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
     val recipes by viewModel.recipes.collectAsStateWithLifecycle()
 
     LaunchedEffect(uiState.currentRecipe) {
@@ -133,7 +135,7 @@ fun DiscoverScreen(
                         customization = ActionCustomization(
                             icon = Res.drawable.ic_heart,
                             iconColor = Color.White,
-                            containerColor = Color(0xFFA32D2D)
+                            containerColor = Color.Green
                         ),
                         onAction = {
                             viewModel.addToFavorite(recipes.first())
@@ -141,7 +143,7 @@ fun DiscoverScreen(
                         }
                     ),
                     leftBackground = SwipeBackground.solid(Color.Red),
-                    rightBackground = SwipeBackground.solid(Color(0xFFA32D2D)),
+                    rightBackground = SwipeBackground.solid(Color.Green),
                     hapticFeedbackConfig = HapticFeedbackConfig.Default,
                     modifier = Modifier.fillMaxWidth()
                 ) {
