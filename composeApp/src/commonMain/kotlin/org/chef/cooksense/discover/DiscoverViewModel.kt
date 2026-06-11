@@ -1,10 +1,15 @@
 package org.chef.cooksense.discover
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import org.chef.cooksense.recipe.Recipe
-import org.chef.cooksense.recipe.RecipeRepository
+import org.chef.cooksense.repository.RecipeRepository
+import org.chef.cooksense.repository.UserRepository
+import org.chef.cooksense.repository.firestore.FirestoreRecipeRepository
+import org.chef.cooksense.repository.firestore.FirestoreUserRepository
 
 data class DiscoverUiState(
     val currentRecipe: Recipe? = null,
@@ -13,32 +18,75 @@ data class DiscoverUiState(
     val showingEmpty: Boolean = false
 )
 
-class DiscoverViewModel : ViewModel() {
-    private val repository = RecipeRepository()
+class DiscoverViewModel(
+    private val recipeRepository: RecipeRepository = FirestoreRecipeRepository(),
+    private val userRepository: UserRepository = FirestoreUserRepository()
+) : ViewModel() {
     private val _uiState = MutableStateFlow(DiscoverUiState())
 
     // Normally, this should be fetched!
-    val _recipes = MutableStateFlow(repository.fetch())
-
-    val uiState = _uiState.asStateFlow()
+    val _recipes = MutableStateFlow<List<Recipe>>(emptyList())
     val recipes = _recipes.asStateFlow()
 
-    fun addToFavorite(recipe: Recipe) {
-        //TODO: set the DB instead
-        uiState.value.favoriteIds.add(recipe.id)
+    val _favorites = MutableStateFlow<List<Recipe>>(emptyList())
+    val favourites = _favorites.asStateFlow()
+
+    val uiState = _uiState.asStateFlow()
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
+
+
+    init {
+        loadData()
     }
 
-    fun addToBlackList(recipe: Recipe) {
-        //TODO: set the DB instead
-        uiState.value.blacklistIds.add(recipe.id)
+    private fun loadData() {
+        viewModelScope.launch {
+            _isLoading.value = true
+            try {
+                val blacklistedIds =
+                    userRepository.fetchBlacklist().map { it.id }
+                _recipes.value =
+                    recipeRepository.fetchRecipes().filter { it.id !in blacklistedIds }
+                _favorites.value =
+                    userRepository.fetchFavorites()
+            } catch (e: Exception) {
+                // TODO: expose error state
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+
+    fun addToFavorite(recipe: Recipe) {
+        viewModelScope.launch {
+            if (_favorites.value.none { it.id == recipe.id }) {
+                _favorites.value += recipe
+                userRepository.addToFavorites(recipe)
+            }
+            removeTopCard()
+        }
     }
 
     fun removeFromFavorites(recipe: Recipe) {
-        uiState.value.favoriteIds.remove(recipe.id)
+        viewModelScope.launch {
+            _favorites.value = _favorites.value.filter { favorite -> favorite.id != recipe.id }
+            userRepository.removeFromFavorites(recipe)
+        }
     }
 
+
+    fun addToBlackList(recipe: Recipe) {
+        viewModelScope.launch {
+            userRepository.addToBlacklist(recipe)
+            removeTopCard()
+        }
+    }
+
+
     fun removeTopCard() {
-        //TODO: we would use the DB and have paging logic for requesting only some part of the db recipes
         _recipes.value = _recipes.value.drop(1)
     }
 }

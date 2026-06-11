@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,17 +25,13 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.chef.cooksense.discover.DiscoverViewModel
 import org.chef.cooksense.recipe.Recipe
-import org.chef.cooksense.recipe.RecipeRepository
-import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.graphics.Color
 
 @Composable
 fun FavoriteScreen(viewModel: DiscoverViewModel) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val favorites by viewModel.favourites.collectAsStateWithLifecycle()
     var selectedRecipe by remember { mutableStateOf<Recipe?>(null) }
-
-    val recipes = RecipeRepository().fetch().asSequence()
-        .filter { recipe -> uiState.favoriteIds.contains(recipe.id) }.toList()
 
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -53,13 +50,13 @@ fun FavoriteScreen(viewModel: DiscoverViewModel) {
                     color = MaterialTheme.colorScheme.onBackground
                 )
                 Text(
-                    text = "${recipes.size} saved recipes",
+                    text = "${favorites.size} saved recipes",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
 
-            if (recipes.isEmpty()) {
+            if (favorites.isEmpty()) {
                 // empty state
                 Box(
                     contentAlignment = Alignment.Center,
@@ -88,7 +85,7 @@ fun FavoriteScreen(viewModel: DiscoverViewModel) {
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    items(recipes, key = { it.id }) { recipe ->
+                    items(favorites, key = { it.id }) { recipe ->
                         FavouriteListItem(
                             recipe = recipe,
                             onClick = { selectedRecipe = recipe }
