@@ -1,0 +1,104 @@
+[
+  {
+    "id": "1",
+    "title": "Spaghetti Carbonara",
+    "description": "Classic Italian pasta with eggs, cheese, pancetta and black pepper.",
+    "tags": [
+      "italian",
+      "pasta",
+      "quick"
+    ],
+    "image": null,
+  },
+  {
+    "id": "2",
+    "title": "Chicken Tikka Masala",
+    "description": "Tender chicken in a rich, creamy tomato-based spiced sauce.",
+    "tags": [
+      "indian",
+      "chicken",
+      "curry"
+    ]
+  },
+  {
+    "id": "3",
+    "title": "Avocado Toast",
+    "description": "Toasted sourdough topped with smashed avocado, chili flakes and a poached egg.",
+    "tags": [
+      "breakfast",
+      "vegetarian",
+      "quick"
+    ]
+  },
+  {
+    "id": "4",
+    "title": "Beef Tacos",
+    "description": "Crispy taco shells filled with seasoned ground beef, salsa and sour cream.",
+    "tags": [
+      "mexican",
+      "beef",
+      "quick"
+    ]
+  },
+  {
+    "id": "5",
+    "title": "Margherita Pizza",
+    "description": "Thin crust pizza with tomato sauce, fresh mozzarella and basil.",
+    "tags": [
+      "italian",
+      "vegetarian",
+      "pizza"
+    ]
+  },
+  {
+    "id": "6",
+    "title": "Greek Salad",
+    "description": "Fresh cucumber, tomato, olives and feta cheese with olive oil dressing.",
+    "tags": [
+      "greek",
+      "salad",
+      "vegetarian",
+      "healthy"
+    ]
+  },
+  {
+    "id": "7",
+    "title": "Butter Chicken",
+    "description": "Slow-cooked chicken in a mild, buttery tomato and cream sauce.",
+    "tags": [
+      "indian",
+      "chicken",
+      "curry"
+    ]
+  },
+  {
+    "id": "8",
+    "title": "French Onion Soup",
+    "description": "Slow-caramelized onion soup topped with a crusty crouton and melted gruyère.",
+    "tags": [
+      "french",
+      "soup",
+      "comfort food"
+    ]
+  },
+  {
+    "id": "9",
+    "title": "Pad Thai",
+    "description": "Stir-fried rice noodles with shrimp, peanuts, bean sprouts and lime.",
+    "tags": [
+      "thai",
+      "noodles",
+      "seafood"
+    ]
+  },
+  {
+    "id": "10",
+    "title": "Blueberry Pancakes",
+    "description": "Fluffy buttermilk pancakes loaded with fresh blueberries and maple syrup.",
+    "tags": [
+      "breakfast",
+      "sweet",
+      "vegetarian"
+    ]
+  }
+]

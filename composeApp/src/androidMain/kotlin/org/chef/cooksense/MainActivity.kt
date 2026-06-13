@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import org.chef.cooksense.firebase.createFirestore
 import org.chef.cooksense.ui.CooksenseTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,7 +18,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             CooksenseTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    App()
+                    val repository = createFirestore(useEmulator = BuildConfig.DEBUG)
+                    App(repository = repository)
                 }
             }
         }

@@ -2,9 +2,11 @@ package org.chef.cooksense.discover
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.gitlive.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.chef.cooksense.firebase.createFirestore
 import org.chef.cooksense.recipe.Recipe
 import org.chef.cooksense.repository.RecipeRepository
 import org.chef.cooksense.repository.UserRepository
@@ -19,9 +21,11 @@ data class DiscoverUiState(
 )
 
 class DiscoverViewModel(
-    private val recipeRepository: RecipeRepository = FirestoreRecipeRepository(),
-    private val userRepository: UserRepository = FirestoreUserRepository()
+    repository: FirebaseFirestore,
 ) : ViewModel() {
+    private val recipeRepository = FirestoreRecipeRepository(repository = repository)
+    private val userRepository = FirestoreUserRepository(repository = repository)
+
     private val _uiState = MutableStateFlow(DiscoverUiState())
 
     // Normally, this should be fetched!
@@ -52,7 +56,7 @@ class DiscoverViewModel(
                 _favorites.value =
                     userRepository.fetchFavorites()
             } catch (e: Exception) {
-                // TODO: expose error state
+                println(e)
             } finally {
                 _isLoading.value = false
             }

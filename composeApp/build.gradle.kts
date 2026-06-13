@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     id("com.google.gms.google-services")
+    kotlin("plugin.serialization") version "2.0.21" // add this
 }
 
 kotlin {
@@ -74,8 +75,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        buildConfig = true
     }
 }
 

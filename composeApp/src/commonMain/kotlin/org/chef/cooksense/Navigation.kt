@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import dev.gitlive.firebase.firestore.FirebaseFirestore
 import org.chef.cooksense.auth.AuthViewModel
 import org.chef.cooksense.auth.LoginScreen
 import org.chef.cooksense.auth.SignUpScreen
@@ -24,7 +25,7 @@ sealed class Screen(val route: String) {
 }
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(repository: FirebaseFirestore) {
     val navController = rememberNavController()
 
     // screens that should show the bottom nav
@@ -62,7 +63,7 @@ fun AppNavigation() {
             startDestination = Screen.Login.route,
             modifier = Modifier.padding(paddingValues)
         ) {
-            val discoverViewModel = DiscoverViewModel()
+            val discoverViewModel = DiscoverViewModel(repository = repository)
 
             composable(Screen.Login.route) {
                 val viewModel = AuthViewModel()

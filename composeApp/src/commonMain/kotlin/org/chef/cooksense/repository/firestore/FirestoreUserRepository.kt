@@ -2,15 +2,15 @@ package org.chef.cooksense.repository.firestore
 
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.auth
+import dev.gitlive.firebase.firestore.FirebaseFirestore
 import dev.gitlive.firebase.firestore.firestore
 import org.chef.cooksense.recipe.Recipe
 import org.chef.cooksense.repository.UserRepository
 
-class FirestoreUserRepository : UserRepository {
-    private val firestore = Firebase.firestore
+class FirestoreUserRepository(private val repository: FirebaseFirestore) : UserRepository {
     private val auth = Firebase.auth
 
-    private fun userDoc() = firestore
+    private fun userDoc() = repository
         .collection("users")
         .document(auth.currentUser?.uid ?: error("User not logged in"))
 
