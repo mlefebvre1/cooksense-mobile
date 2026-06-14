@@ -49,12 +49,17 @@ class DiscoverViewModel(
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                val blacklistedIds =
-                    userRepository.fetchBlacklist().map { it.id }
-                _recipes.value =
-                    recipeRepository.fetchRecipes().filter { it.id !in blacklistedIds }
                 _favorites.value =
                     userRepository.fetchFavorites()
+                val favoriteIds = _favorites.value.map { it.id }
+
+                val blacklistedIds =
+                    userRepository.fetchBlacklist().map { it.id }
+
+                _recipes.value =
+                    recipeRepository.fetchRecipes()
+                        .filter { it.id !in blacklistedIds && it.id !in favoriteIds }
+
             } catch (e: Exception) {
                 println(e)
             } finally {
@@ -76,8 +81,15 @@ class DiscoverViewModel(
 
     fun removeFromFavorites(recipe: Recipe) {
         viewModelScope.launch {
-            _favorites.value = _favorites.value.filter { favorite -> favorite.id != recipe.id }
-            userRepository.removeFromFavorites(recipe)
+            if (recipe in _favorites.value) {
+                userRepository.removeFromFavorites(recipe)
+
+                _favorites.value = _favorites.value.filter { favorite -> favorite.id != recipe.id }
+
+                // Put the recipe back into the recipes list
+                _recipes.value += recipe
+            }
+
         }
     }
 
@@ -90,7 +102,7 @@ class DiscoverViewModel(
     }
 
 
-    fun removeTopCard() {
+    private fun removeTopCard() {
         _recipes.value = _recipes.value.drop(1)
     }
 }

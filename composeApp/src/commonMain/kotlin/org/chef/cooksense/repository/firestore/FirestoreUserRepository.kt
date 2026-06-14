@@ -32,7 +32,7 @@ class FirestoreUserRepository(private val repository: FirebaseFirestore) : UserR
 
     override suspend fun fetchBlacklist(): List<Recipe> {
         return userDoc()
-            .collection("favourites")
+            .collection("blacklist")
             .get()
             .documents
             .map { it.data<Recipe>() }

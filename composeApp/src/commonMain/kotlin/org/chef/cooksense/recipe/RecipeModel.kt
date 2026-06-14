@@ -10,6 +10,5 @@ data class Recipe(
     val title: String,
     val description: String,
     val tags: List<String>,
-    @Contextual
-    val image: Painter?
+    val imageUrl: String?,
 )

@@ -60,7 +60,7 @@ fun FavoriteScreen(viewModel: DiscoverViewModel) {
                 // empty state
                 Box(
                     contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize().weight(1f)
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -81,7 +81,7 @@ fun FavoriteScreen(viewModel: DiscoverViewModel) {
                 }
             } else {
                 LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize().weight(1f),
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {

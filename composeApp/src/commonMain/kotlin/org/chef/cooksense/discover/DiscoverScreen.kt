@@ -46,12 +46,10 @@ import org.chef.cooksense.recipe.RecipeCard
 @Composable
 fun DiscoverScreen(
     viewModel: DiscoverViewModel
-    //TODO: add callbacks
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     val recipes by viewModel.recipes.collectAsStateWithLifecycle()
-    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
 
     LaunchedEffect(uiState.currentRecipe) {
     }
@@ -128,7 +126,6 @@ fun DiscoverScreen(
                         ),
                         onAction = {
                             viewModel.addToBlackList(recipes.first())
-                            viewModel.removeTopCard()
                         }
                     ),
                     rightDismissAction = SwipeAction(
@@ -140,7 +137,6 @@ fun DiscoverScreen(
                         ),
                         onAction = {
                             viewModel.addToFavorite(recipes.first())
-                            viewModel.removeTopCard()
                         }
                     ),
                     leftBackground = SwipeBackground.solid(Color.Red),
@@ -187,7 +183,6 @@ fun DiscoverScreen(
                 onClick = {
                     if (recipes.isNotEmpty()) {
                         viewModel.addToBlackList(recipes.first())
-                        viewModel.removeTopCard()
                     }
                 },
                 modifier = Modifier.size(56.dp),
@@ -222,7 +217,6 @@ fun DiscoverScreen(
                 onClick = {
                     if (recipes.isNotEmpty()) {
                         viewModel.addToFavorite(recipes.first())
-                        viewModel.removeTopCard()
                     }
                 },
                 modifier = Modifier.size(56.dp),
