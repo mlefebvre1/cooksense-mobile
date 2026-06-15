@@ -1,7 +1,6 @@
 package org.chef.cooksense
 
-interface Platform {
-    val name: String
-}
+import androidx.compose.runtime.Composable
 
-expect fun getPlatform(): Platform
+@Composable
+expect fun PlatformName(): String

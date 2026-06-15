@@ -4,8 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
+import org.chef.cooksense.firebase.createFirestore
+import org.chef.cooksense.firebase.firestoreRepository
+import org.chef.cooksense.ui.CooksenseTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,13 +17,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            App()
+            CooksenseTheme {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    val repository =
+                        firestoreRepository(firestore = createFirestore(useEmulator = BuildConfig.DEBUG))
+                    App(repository = repository)
+                }
+            }
         }
     }
-}
-
-@Preview
-@Composable
-fun AppAndroidPreview() {
-    App()
 }

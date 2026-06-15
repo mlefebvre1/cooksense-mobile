@@ -1,9 +1,8 @@
 package org.chef.cooksense
 
-import platform.UIKit.UIDevice
+import androidx.compose.runtime.Composable
 
-class IOSPlatform: Platform {
-    override val name: String = UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
+@Composable
+actual fun PlatformName(): String {
+    return "iOS"
 }
-
-actual fun getPlatform(): Platform = IOSPlatform()
