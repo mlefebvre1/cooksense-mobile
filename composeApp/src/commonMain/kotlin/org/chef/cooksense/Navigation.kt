@@ -16,6 +16,7 @@ import org.chef.cooksense.auth.SignUpScreen
 import org.chef.cooksense.discover.DiscoverScreen
 import org.chef.cooksense.discover.DiscoverViewModel
 import org.chef.cooksense.favorite.FavoriteScreen
+import org.chef.cooksense.repository.Repository
 
 
 sealed class Screen(val route: String) {
@@ -25,7 +26,7 @@ sealed class Screen(val route: String) {
 }
 
 @Composable
-fun AppNavigation(repository: FirebaseFirestore) {
+fun AppNavigation(repository: Repository) {
     val navController = rememberNavController()
 
     // screens that should show the bottom nav

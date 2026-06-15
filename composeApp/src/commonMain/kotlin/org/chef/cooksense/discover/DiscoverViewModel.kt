@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import org.chef.cooksense.firebase.createFirestore
 import org.chef.cooksense.recipe.Recipe
 import org.chef.cooksense.repository.RecipeRepository
+import org.chef.cooksense.repository.Repository
 import org.chef.cooksense.repository.UserRepository
 import org.chef.cooksense.repository.firestore.FirestoreRecipeRepository
 import org.chef.cooksense.repository.firestore.FirestoreUserRepository
@@ -21,10 +22,9 @@ data class DiscoverUiState(
 )
 
 class DiscoverViewModel(
-    repository: FirebaseFirestore,
+    repository: Repository,
 ) : ViewModel() {
-    private val recipeRepository = FirestoreRecipeRepository(repository = repository)
-    private val userRepository = FirestoreUserRepository(repository = repository)
+    private val _repository = repository
 
     private val _uiState = MutableStateFlow(DiscoverUiState())
 
@@ -50,14 +50,14 @@ class DiscoverViewModel(
             _isLoading.value = true
             try {
                 _favorites.value =
-                    userRepository.fetchFavorites()
+                    _repository.fetchFavorites()
                 val favoriteIds = _favorites.value.map { it.id }
 
                 val blacklistedIds =
-                    userRepository.fetchBlacklist().map { it.id }
+                    _repository.fetchBlacklist().map { it.id }
 
                 _recipes.value =
-                    recipeRepository.fetchRecipes()
+                    _repository.fetchRecipes()
                         .filter { it.id !in blacklistedIds && it.id !in favoriteIds }
 
             } catch (e: Exception) {
@@ -73,7 +73,7 @@ class DiscoverViewModel(
         viewModelScope.launch {
             if (_favorites.value.none { it.id == recipe.id }) {
                 _favorites.value += recipe
-                userRepository.addToFavorites(recipe)
+                _repository.addToFavorites(recipe)
             }
             removeTopCard()
         }
@@ -82,7 +82,7 @@ class DiscoverViewModel(
     fun removeFromFavorites(recipe: Recipe) {
         viewModelScope.launch {
             if (recipe in _favorites.value) {
-                userRepository.removeFromFavorites(recipe)
+                _repository.removeFromFavorites(recipe)
 
                 _favorites.value = _favorites.value.filter { favorite -> favorite.id != recipe.id }
 
@@ -96,7 +96,7 @@ class DiscoverViewModel(
 
     fun addToBlackList(recipe: Recipe) {
         viewModelScope.launch {
-            userRepository.addToBlacklist(recipe)
+            _repository.addToBlacklist(recipe)
             removeTopCard()
         }
     }
