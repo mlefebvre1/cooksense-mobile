@@ -126,17 +126,6 @@ fun DiscoverScreen(
                     behavior = SwipeBehavior.DISMISS,
                     threshold = 0.4f,
                     leftDismissAction = SwipeAction(
-                        label = "Blacklist",
-                        customization = ActionCustomization(
-                            icon = Res.drawable.ic_close,
-                            iconColor = Color.White,
-                            containerColor = Color.Red
-                        ),
-                        onAction = {
-                            viewModel.addToBlackList(recipes.first())
-                        }
-                    ),
-                    rightDismissAction = SwipeAction(
                         label = "Favorite",
                         customization = ActionCustomization(
                             icon = Res.drawable.ic_heart,
@@ -144,11 +133,27 @@ fun DiscoverScreen(
                             containerColor = Color.Green
                         ),
                         onAction = {
-                            viewModel.addToFavorite(recipes.first())
+                            if (recipes.isNotEmpty()) {
+                                viewModel.addToFavorite(recipes.first())
+                            }
                         }
                     ),
-                    leftBackground = SwipeBackground.solid(Color.Red),
-                    rightBackground = SwipeBackground.solid(Color.Green),
+                    rightDismissAction = SwipeAction(
+
+                        label = "Blacklist",
+                        customization = ActionCustomization(
+                            icon = Res.drawable.ic_close,
+                            iconColor = Color.White,
+                            containerColor = Color.Red
+                        ),
+                        onAction = {
+                            if (recipes.isNotEmpty()) {
+                                viewModel.addToBlackList(recipes.first())
+                            }
+                        }
+                    ),
+                    leftBackground = SwipeBackground.solid(Color.Green),
+                    rightBackground = SwipeBackground.solid(Color.Red),
                     hapticFeedbackConfig = HapticFeedbackConfig.Default,
                     modifier = Modifier.fillMaxWidth()
                 ) {
