@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
     id("com.google.gms.google-services")
     kotlin("plugin.serialization") version "2.0.21" // add this
+    kotlin("native.cocoapods") // add this
 }
 
 kotlin {
@@ -17,11 +18,16 @@ kotlin {
         }
     }
 
-    listOf(
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
+    iosArm64()
+    iosSimulatorArm64()
+
+    cocoapods {
+        summary = "CookSense Shared Module"
+        homepage = "https://example.com"
+        version = "1.0"
+        ios.deploymentTarget = "18.0"
+
+        framework {
             baseName = "ComposeApp"
             isStatic = true
         }
