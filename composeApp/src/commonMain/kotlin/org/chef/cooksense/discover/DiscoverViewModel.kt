@@ -14,19 +14,12 @@ import org.chef.cooksense.repository.UserRepository
 import org.chef.cooksense.repository.firestore.FirestoreRecipeRepository
 import org.chef.cooksense.repository.firestore.FirestoreUserRepository
 
-data class DiscoverUiState(
-    val currentRecipe: Recipe? = null,
-    val favoriteIds: HashSet<String> = hashSetOf(),
-    val blacklistIds: HashSet<String> = hashSetOf(),
-    val showingEmpty: Boolean = false
-)
 
 class DiscoverViewModel(
     repository: Repository,
 ) : ViewModel() {
     private val _repository = repository
 
-    private val _uiState = MutableStateFlow(DiscoverUiState())
 
     // Normally, this should be fetched!
     val _recipes = MutableStateFlow<List<Recipe>>(emptyList())
@@ -35,12 +28,10 @@ class DiscoverViewModel(
     val _favorites = MutableStateFlow<List<Recipe>>(emptyList())
     val favourites = _favorites.asStateFlow()
 
-    val uiState = _uiState.asStateFlow()
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
-
-
+    
     init {
         loadData()
     }

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,9 +30,20 @@ import androidx.compose.ui.graphics.Color
 
 @Composable
 fun FavoriteScreen(viewModel: DiscoverViewModel) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val favorites by viewModel.favourites.collectAsStateWithLifecycle()
     var selectedRecipe by remember { mutableStateOf<Recipe?>(null) }
+
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle() // add this
+
+    if (isLoading) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            CircularProgressIndicator()
+        }
+        return
+    }
 
 
     Box(modifier = Modifier.fillMaxSize()) {
