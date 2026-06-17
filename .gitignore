@@ -116,3 +116,4 @@ captures/
 # *.secret
 # *.env
 # secrets/
+scripts/firestore/service-account.json

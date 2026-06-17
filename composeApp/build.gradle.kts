@@ -30,6 +30,7 @@ kotlin {
         framework {
             baseName = "ComposeApp"
             isStatic = true
+            freeCompilerArgs += listOf("-Xbinary=bundleId=org.chef.cooksense")
         }
     }
 

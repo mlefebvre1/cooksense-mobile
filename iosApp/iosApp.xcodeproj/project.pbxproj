@@ -16,6 +16,11 @@
 		39DF416598F9A1425C3BC0ED /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.release.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
 		999DD1FDF4E03F284E1004A6 /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
 		A8D3F8872EF39599F7E94E01 /* cooksense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cooksense.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C30FB2402FE0F81A0015A90F /* compose_multiplatform.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = compose_multiplatform.xml; sourceTree = "<group>"; };
+		C30FB2412FE0F81A0015A90F /* ic_close.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ic_close.xml; sourceTree = "<group>"; };
+		C30FB2422FE0F81A0015A90F /* ic_heart.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ic_heart.xml; sourceTree = "<group>"; };
+		C30FB2432FE0F81A0015A90F /* ic_launcher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_launcher.png; sourceTree = "<group>"; };
+		C30FB2442FE0F81A0015A90F /* like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like.png; sourceTree = "<group>"; };
 		D1CF7EE910007C4210225BB5 /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -87,12 +92,50 @@
 		BB66E3344AC51E386C02E304 = {
 			isa = PBXGroup;
 			children = (
+				C30FB2482FE0F81A0015A90F /* compose-resources */,
 				9E4F16426D7AA85290758C15 /* Configuration */,
 				EFA5AE6508EDC46AE633438D /* iosApp */,
 				15BB7FC4CC6E932CE7D2FAB6 /* Products */,
 				25BFCA2E957CA3EC2F7137D4 /* Pods */,
 				89014A064531119A27FB34CA /* Frameworks */,
 			);
+			sourceTree = "<group>";
+		};
+		C30FB2452FE0F81A0015A90F /* drawable */ = {
+			isa = PBXGroup;
+			children = (
+				C30FB2402FE0F81A0015A90F /* compose_multiplatform.xml */,
+				C30FB2412FE0F81A0015A90F /* ic_close.xml */,
+				C30FB2422FE0F81A0015A90F /* ic_heart.xml */,
+				C30FB2432FE0F81A0015A90F /* ic_launcher.png */,
+				C30FB2442FE0F81A0015A90F /* like.png */,
+			);
+			path = drawable;
+			sourceTree = "<group>";
+		};
+		C30FB2462FE0F81A0015A90F /* cooksense.composeapp.generated.resources */ = {
+			isa = PBXGroup;
+			children = (
+				C30FB2452FE0F81A0015A90F /* drawable */,
+			);
+			path = cooksense.composeapp.generated.resources;
+			sourceTree = "<group>";
+		};
+		C30FB2472FE0F81A0015A90F /* composeResources */ = {
+			isa = PBXGroup;
+			children = (
+				C30FB2462FE0F81A0015A90F /* cooksense.composeapp.generated.resources */,
+			);
+			path = composeResources;
+			sourceTree = "<group>";
+		};
+		C30FB2482FE0F81A0015A90F /* compose-resources */ = {
+			isa = PBXGroup;
+			children = (
+				C30FB2472FE0F81A0015A90F /* composeResources */,
+			);
+			name = "compose-resources";
+			path = "../composeApp/build/compose/cocoapods/compose-resources";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -107,6 +150,7 @@
 				84EEC8CEF7F30F2F235B46AF /* Sources */,
 				23DF8962CA321382E86ACB3E /* Frameworks */,
 				69A84D85D3AEC19FF98E2051 /* Resources */,
+				BEC8EE0B60882E1E41537F2D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -128,7 +172,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1620;
-				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 2650;
 				TargetAttributes = {
 					B5D46F4E15AF7C9B523ED3D4 = {
 						CreatedOnToolsVersion = 16.2;
@@ -185,7 +229,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"YES\" = \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" ]; then\n  echo \"Skipping Gradle build task invocation due to OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED environment variable set to \\\"YES\\\"\"\n  exit 0\nfi\ncd \"$SRCROOT/..\"\n./gradlew :composeApp:embedAndSignAppleFrameworkForXcode\n";
+			shellScript = "if [ \"YES\" = \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" ]; then\n  echo \"Skipping Gradle build task invocation due to OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED environment variable set to \\\"YES\\\"\"\n  exit 0\nfi\ncd \"$SRCROOT/..\"\n./gradlew :composeApp:embedAndSignAppleFrameworkForXcode :composeApp:syncPodComposeResourcesForIos\n";
 		};
 		AC8614ECD940C4AEBA0CB08A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -207,6 +251,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BEC8EE0B60882E1E41537F2D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iosApp/Pods-iosApp-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iosApp/Pods-iosApp-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iosApp/Pods-iosApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -259,6 +324,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "${TEAM_ID}";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -282,6 +348,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -291,13 +358,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 999DD1FDF4E03F284E1004A6 /* Pods-iosApp.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = "${TEAM_ID}";
+				DEVELOPMENT_TEAM = 62VQSCU8NQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
@@ -320,13 +386,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 39DF416598F9A1425C3BC0ED /* Pods-iosApp.release.xcconfig */;
 			buildSettings = {
-				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = "${TEAM_ID}";
+				DEVELOPMENT_TEAM = 62VQSCU8NQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
@@ -382,6 +447,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "${TEAM_ID}";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -398,6 +464,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};

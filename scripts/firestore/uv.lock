@@ -183,12 +183,14 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "firebase-admin" },
+    { name = "google-auth" },
     { name = "requests" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "firebase-admin", specifier = ">=7.4.0" },
+    { name = "google-auth", specifier = ">=2.54.0" },
     { name = "requests", specifier = ">=2.34.2" },
 ]
 

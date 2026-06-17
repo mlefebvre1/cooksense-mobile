@@ -12,6 +12,8 @@ fun createFirestore(useEmulator: Boolean = false): FirebaseFirestore {
     if (useEmulator) {
         println("Using firestore emulator.")
         firestore.useEmulator(emulatorHost, port = 8080)
+    } else {
+        println("Using cloud firestore.")
     }
     return firestore
 }
