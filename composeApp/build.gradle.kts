@@ -71,6 +71,23 @@ android {
         versionCode = 1
         versionName = "1.0"
     }
+
+    flavorDimensions += "env"
+    productFlavors {
+        create("dev") {
+            dimension = "env"
+            buildConfigField("Boolean", "USE_EMULATOR", "true")
+        }
+        create("staging") {
+            dimension = "env"
+            buildConfigField("Boolean", "USE_EMULATOR", "false")
+        }
+        create("prod") {
+            dimension = "env"
+            buildConfigField("Boolean", "USE_EMULATOR", "false")
+        }
+    }
+    
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"

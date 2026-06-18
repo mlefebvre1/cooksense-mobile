@@ -4,3 +4,4 @@ import androidx.compose.runtime.Composable
 
 @Composable
 expect fun PlatformName(): String
+expect val useEmulator: Boolean

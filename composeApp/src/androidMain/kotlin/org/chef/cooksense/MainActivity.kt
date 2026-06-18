@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
             CooksenseTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     val repository =
-                        firestoreRepository(firestore = createFirestore(useEmulator = BuildConfig.DEBUG))
+                        firestoreRepository(firestore = createFirestore(useEmulator = useEmulator))
                     App(repository = repository)
                 }
             }

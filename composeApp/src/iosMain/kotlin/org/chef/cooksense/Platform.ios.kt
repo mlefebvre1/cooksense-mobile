@@ -6,3 +6,5 @@ import androidx.compose.runtime.Composable
 actual fun PlatformName(): String {
     return "iOS"
 }
+
+actual val useEmulator: Boolean = false // change manually when needed
